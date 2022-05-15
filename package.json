@@ -7,7 +7,9 @@
         "tsc": "tsc",
         "build": "sucrase ./src -d ./build --transforms typescript,imports",
         "start": "npx ts-node-dev --respawn --transpile-only src/index.ts",
-        "pm2": "npm install && sucrase ./src -d ./build --transforms typescript,imports && pm2 delete all && pm2 start build/index.js --name=app -f"
+        "pm2-delete": "pm2 delete all",
+        "pm2": "npm install && sucrase ./src -d ./build --transforms typescript,imports && pm2 start build/index.js --name=app -f",
+        "eslint": "./node_modules/.bin/eslint ./src"
     },
     "repository": {
         "type": "git",
