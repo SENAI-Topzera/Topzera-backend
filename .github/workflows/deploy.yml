@@ -1,0 +1,21 @@
+name: Deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create env file
+        run: |
+          touch .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo DATABASE_ADDRESS=${{ secrets.DATABASE_ADDRESS }} >> .env
+
+      - name: Stop pm2 process
+        run: npm run pm2-delete
+      - name: Init pm2 process
+        run: npm run pm2
