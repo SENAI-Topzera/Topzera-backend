@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_ADDRESS")
+}
+
+model CNH {
+  id_cnh        Int       @id @default(autoincrement())
+  data_nasc     DateTime? @db.Date
+  rg            String?   @db.VarChar(8)
+  num_registro  String?   @db.VarChar(11)
+  num_cnh       String?   @db.VarChar(10)
+  data_validade DateTime? @db.Date
+  estado        String?   @db.Char(2)
+  usuario       usuario[]
+}
+
+model carro {
+  id_carro                   Int         @id @default(autoincrement())
+  marca                      String?     @db.VarChar(12)
+  modelo                     String?     @db.VarChar(20)
+  ano_modelo                 String?     @db.VarChar(8)
+  cor                        String?     @db.VarChar(10)
+  placa                      String?     @db.VarChar(8)
+  tp_comb                    String?     @db.VarChar(8)
+  tp_cambio                  String?     @db.VarChar(10)
+  qtd_portas                 String?     @db.VarChar(5)
+  qtd_lugares                String?     @db.VarChar(2)
+  qtd_bagagem                String?     @db.VarChar(4)
+  cod_renavam                String?     @db.VarChar(11)
+  dat_disponibilidade_inic   DateTime?   @db.DateTime(0)
+  dat_disponibilidade_fim    DateTime?   @db.DateTime(0)
+  ind_status_disponibilidade Boolean?
+  locacao                    locacao[]
+  opcionais                  opcionais[]
+}
+
+model endereco {
+  id_endereco Int       @id @default(autoincrement())
+  cep         String    @db.VarChar(8)
+  logradouro  String    @db.VarChar(60)
+  numero      String    @db.VarChar(6)
+  bairro      String    @db.VarChar(45)
+  cidade      String    @db.VarChar(45)
+  estado      String    @db.VarChar(45)
+  usuario     usuario[]
+}
+
+model locacao {
+  id_locacao          Int       @default(autoincrement())
+  id_usuario          Int?
+  id_carro            Int?
+  valor_hora          Decimal?  @db.Decimal(10, 2)
+  valor_locacao       Decimal?  @db.Decimal(10, 2)
+  local_retirada      String?   @db.VarChar(45)
+  data_retirada       DateTime? @db.DateTime(0)
+  data_devolucao      DateTime? @db.DateTime(0)
+  carro_id_carro      Int
+  usuario_id_usuario  Int
+  usuario_id_endereco Int
+  usuario_CNH_id_cnh  Int
+  carro               carro     @relation(fields: [carro_id_carro], references: [id_carro], onDelete: NoAction, onUpdate: NoAction, map: "fk_locacao_carro1")
+  usuario             usuario   @relation(fields: [usuario_id_usuario, usuario_id_endereco, usuario_CNH_id_cnh], references: [id_usuario, id_endereco, CNH_id_cnh], onDelete: NoAction, onUpdate: NoAction, map: "fk_locacao_usuario1")
+
+  @@id([id_locacao, carro_id_carro, usuario_id_usuario, usuario_id_endereco, usuario_CNH_id_cnh])
+  @@index([carro_id_carro], map: "fk_locacao_carro1_idx")
+  @@index([usuario_id_usuario, usuario_id_endereco, usuario_CNH_id_cnh], map: "fk_locacao_usuario1_idx")
+}
+
+model opcionais {
+  id_opcionais   Int      @default(autoincrement())
+  ar_cond        Boolean?
+  dir_hid        Boolean?
+  abs            Boolean?
+  trava_elet     Boolean?
+  airbag         Boolean?
+  teto_solar     Boolean?
+  tracao         Boolean?
+  ar_quenteFrio  Boolean?
+  vidro_elet     Boolean?
+  comp_bord      Boolean?
+  carro_id_carro Int
+  carro          carro    @relation(fields: [carro_id_carro], references: [id_carro], onDelete: NoAction, onUpdate: NoAction, map: "fk_opcionais_carro1")
+
+  @@id([id_opcionais, carro_id_carro])
+  @@index([carro_id_carro], map: "fk_opcionais_carro1_idx")
+}
+
+model usuario {
+  id_usuario     Int       @default(autoincrement())
+  nome_completo  String    @db.VarChar(70)
+  nacionalidade  String?   @db.VarChar(50)
+  genero         String?   @db.VarChar(11)
+  telefone       String    @db.VarChar(11)
+  email          String    @db.VarChar(45)
+  senha          String?   @db.VarChar(45)
+  local_img_car  String?   @db.VarChar(200)
+  id_endereco    Int
+  CNH_id_cnh     Int
+  local_img_user String?   @db.VarChar(200)
+  CNH            CNH       @relation(fields: [CNH_id_cnh], references: [id_cnh], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_CNH1")
+  endereco       endereco  @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_endereco")
+  locacao        locacao[]
+
+  @@id([id_usuario, id_endereco, CNH_id_cnh])
+  @@index([CNH_id_cnh], map: "fk_usuario_CNH1_idx")
+  @@index([id_endereco], map: "fk_usuario_endereco_idx")
+}
