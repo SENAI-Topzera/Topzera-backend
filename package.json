@@ -6,7 +6,7 @@
     "scripts": {
         "tsc": "tsc",
         "build": "sucrase ./src -d ./build --transforms typescript,imports",
-        "start": "ts-node-dev --respawn --transpile-only ./src && nodemon ./build/index.js",
+        "start": "tsnd --respawn ./src/index.ts --watch ./src",
         "pm2-delete": "pm2 delete all",
         "pm2": "npm install && sucrase ./src -d ./build --transforms typescript,imports && pm2 start build/index.js --name=app -f",
         "eslint": "./node_modules/.bin/eslCarController.tnt ./src",

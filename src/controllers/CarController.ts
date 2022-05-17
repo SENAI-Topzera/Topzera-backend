@@ -10,8 +10,9 @@ export class CarController {
         return response.json(await prismaClient.carro.findMany());
     }
 
-    async getCarroById(request: Request, response: Response) {
-        const idCarro = 1;
-        return response.json(carService.geCarById(idCarro));
+    async getCarById(request: Request, response: Response) {
+        const { id } = request.params;
+        const idCarro: number = Number.parseInt(id);
+        return response.json(await carService.geCarById(idCarro));
     }
 }

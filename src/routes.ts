@@ -6,8 +6,8 @@ const router = Router();
 const carController = new CarController();
 const statusController = new StatusController();
 
-router.get("/cars", carController.findAll);
-router.get("/", statusController.handle);
-router.post("/id", carController.getCarroById);
+router.get("/api/cars", carController.findAll);
+router.get("/api/", statusController.handle);
+router.post("/api/:id", carController.getCarById);
 
 export { router };
