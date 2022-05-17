@@ -8,5 +8,6 @@ const statusController = new StatusController();
 
 router.get("/cars", carController.findAll);
 router.get("/", statusController.handle);
+router.post("/id", carController.getCarroById);
 
 export { router };

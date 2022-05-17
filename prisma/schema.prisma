@@ -109,3 +109,9 @@ model usuario {
   @@index([CNH_id_cnh], map: "fk_usuario_CNH1_idx")
   @@index([id_endereco], map: "fk_usuario_endereco_idx")
 }
+
+model localizacao_carro {
+  id_localizacao_carro Int     @id @default(autoincrement())
+  latitude             String? @db.VarChar(500)
+  Longitude            String? @db.VarChar(500)
+}
