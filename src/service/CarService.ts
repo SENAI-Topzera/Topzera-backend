@@ -1,7 +1,6 @@
-import { carro } from "@prisma/client";
 import prismaClient from "../database/prismaClient";
 
-export class CarService {
+class CarService {
     async geCarById(idCarro: number) {
         const car: any = await prismaClient.carro.findFirst({
             where: {
@@ -12,3 +11,5 @@ export class CarService {
         return car;
     }
 }
+
+export default CarService;

@@ -6,7 +6,8 @@
     "scripts": {
         "tsc": "tsc",
         "build": "sucrase ./src -d ./build --transforms typescript,imports",
-        "start": "tsnd --respawn ./src/index.ts --watch ./src",
+        "start-old": "tsnd --respawn ./src/index.ts --watch ./src",
+        "start": "tsnd --inspect --transpile-only --ignore-watch node_modules src/index.ts",
         "pm2-delete": "pm2 delete all",
         "pm2": "npm install && sucrase ./src -d ./build --transforms typescript,imports && pm2 start build/index.js --name=app -f",
         "eslint": "./node_modules/.bin/eslCarController.tnt ./src",
@@ -22,6 +23,8 @@
         "@prisma/client": "^3.14.0",
         "@types/cors": "^2.8.12",
         "@types/express": "^4.17.13",
+        "@types/mime-types": "^2.1.1",
+        "@types/multer": "^1.4.7",
         "@typescript-eslint/eslint-plugin": "^5.23.0",
         "@typescript-eslint/parser": "^5.23.0",
         "eslint": "^8.15.0",
@@ -35,9 +38,13 @@
         "webpack-dev-server": "^4.9.0"
     },
     "dependencies": {
+        "@aws-sdk/client-s3": "^3.95.0",
         "cors": "^2.8.5",
         "dotenv": "^16.0.0",
-        "express": "^4.18.1"
+        "express": "^4.18.1",
+        "mime": "^3.0.0",
+        "mime-types": "^2.1.35",
+        "multer": "^1.4.4"
     },
     "bugs": {
         "url": "https://github.com/SENAI-Topzera/backend/issues"
