@@ -1,17 +1,18 @@
 import { Router } from "express";
 import { CarController } from "./controllers/CarController";
 import { StatusController } from "./controllers/StatusController";
-import multer from "multer";
-import multerConfig from "./config/multer";
+import { UserController } from "./controllers/UserController";
+
 
 const router = Router();
 const carController = new CarController();
 const statusController = new StatusController();
-const uploadImage = multer(multerConfig);
+const userController = new UserController();
 
 router.get("/api/cars", carController.findAll);
 router.get("/api/", statusController.handle);
-router.get("/api/:id", carController.getCarById);
-router.post("/api/uploadImage", uploadImage.array('images', 10), carController.uploadImage);
+router.get("/api/:id", carController.getCarroById);
+router.post("/api/user", userController.saveUser);
+router.get("/api/user/:id", userController.getUserById);
 
 export { router };
