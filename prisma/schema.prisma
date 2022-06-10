@@ -34,6 +34,7 @@ model Car {
   dat_disponibilidade_inic   DateTime?    @db.DateTime(0)
   dat_disponibilidade_fim    DateTime?    @db.DateTime(0)
   ind_status_disponibilidade Boolean?
+  avalia_carro               Car_Rating[] @relation("avalia_carroTocarro")
   locacao                    Rental[]
   localizacao_carro          Rental_Car[] @relation("carroTolocalizacao_carro")
   opcionais                  Optionals[]
@@ -97,19 +98,20 @@ model Optionals {
 }
 
 model User {
-  id_usuario     Int      @default(autoincrement())
-  nome_completo  String   @db.VarChar(70)
-  nacionalidade  String?  @db.VarChar(50)
-  genero         String?  @db.VarChar(11)
-  telefone       String   @db.VarChar(11)
-  email          String   @db.VarChar(45)
-  senha          String?  @db.VarChar(45)
-  local_img_car  String?  @db.VarChar(200)
+  id_usuario     Int           @default(autoincrement())
+  nome_completo  String        @db.VarChar(70)
+  nacionalidade  String?       @db.VarChar(50)
+  genero         String?       @db.VarChar(11)
+  telefone       String        @db.VarChar(11)
+  email          String        @db.VarChar(45)
+  senha          String?       @db.VarChar(45)
+  local_img_car  String?       @db.VarChar(200)
   id_endereco    Int
   CNH_id_cnh     Int
-  local_img_user String?  @db.VarChar(200)
-  CNH            CNH      @relation(fields: [CNH_id_cnh], references: [id_cnh], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_CNH1")
-  endereco       Address  @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_endereco")
+  local_img_user String?       @db.VarChar(200)
+  CNH            CNH           @relation(fields: [CNH_id_cnh], references: [id_cnh], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_CNH1")
+  endereco       Address       @relation(fields: [id_endereco], references: [id_endereco], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_endereco")
+  avalia_usuario User_Rating[] @relation("avalia_usuarioTousuario")
   locacao        Rental[]
 
   @@id([id_usuario, id_endereco, CNH_id_cnh])
@@ -127,4 +129,30 @@ model Rental_Car {
 
   @@index([id_carro], map: "fk_carro")
   @@map("localizacao_carro")
+}
+
+model Car_Rating {
+  idavalia_carro       Int     @default(autoincrement())
+  comentario_avaliacao String? @db.VarChar(400)
+  nota                 Int?
+  carro_id_carro       Int
+  carro                Car     @relation("avalia_carroTocarro", fields: [carro_id_carro], references: [id_carro], onDelete: NoAction, onUpdate: NoAction, map: "fk_avalia_carro_carro1")
+
+  @@id([idavalia_carro, carro_id_carro])
+  @@index([carro_id_carro], map: "fk_avalia_carro_carro1_idx")
+  @@map("avalia_carro")
+}
+
+model User_Rating {
+  idavalia_usuario     Int     @default(autoincrement())
+  comentario_avaliacao String? @db.VarChar(400)
+  nota                 Int?
+  usuario_id_usuario   Int
+  usuario_id_endereco  Int
+  usuario_CNH_id_cnh   Int
+  usuario              User    @relation("avalia_usuarioTousuario", fields: [usuario_id_usuario, usuario_id_endereco, usuario_CNH_id_cnh], references: [id_usuario, id_endereco, CNH_id_cnh], onDelete: NoAction, onUpdate: NoAction, map: "fk_avalia_usuario_usuario1")
+
+  @@id([idavalia_usuario, usuario_id_usuario, usuario_id_endereco, usuario_CNH_id_cnh])
+  @@index([usuario_id_usuario, usuario_id_endereco, usuario_CNH_id_cnh], map: "fk_avalia_usuario_usuario1_idx")
+  @@map("avalia_usuario")
 }
