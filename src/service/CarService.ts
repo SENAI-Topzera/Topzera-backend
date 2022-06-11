@@ -1,11 +1,17 @@
 import prismaClient from "../database/prismaClient";
 
-export class CarService {
-    async getCarById(idCarro: number) {
-        await prismaClient.carro.findUnique({
-            where: {
-                id_carro: 1
-            }
-        })
-    }
+class CarService {
+  async geCarById(idCarro: number) {
+    console.log("car log: " + idCarro);
+
+    const car = await prismaClient.car.findFirst({
+      where: {
+        id_carro: idCarro,
+      },
+    });
+    console.log(car);
+    return car;
+  }
 }
+
+export default CarService;
