@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { UserService } from "../service/UserService";
-import { ELoginStatus } from "../types/user.type";
 const service = new UserService();
 
 export class UserController {
