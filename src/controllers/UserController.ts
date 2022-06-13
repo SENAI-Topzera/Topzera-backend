@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
 import { UserService } from "../service/UserService";
+import { ELoginStatus } from "../types/user.type";
 const service = new UserService();
 
 export class UserController {
+  async login(request: Request, response: Response) {
+    const loginStatus = await service.login(request.body);
+    return response.send(loginStatus);
+  }
+
   async saveUser(request: Request, response: Response) {
     const dto = await service.saveUser(request);
-    return response.json(dto).status(201);
+    return response.status(201).json(dto);
   }
 
   async getUserById(request: Request, response: Response) {

@@ -14,6 +14,7 @@ router.get("/api/cars/:id", carController.getCarById);
 router.post("/api/cars/images", carController.getCarImages); //trazer imagens especificadas
 router.post("/api/users", userController.saveUser);
 router.get("/api/users/:id", userController.getUserById);
+router.post("/api/login", userController.login);
 // router.post(
 //   "/api/uploadImage",
 //   uploadImage.array("images", 10),
