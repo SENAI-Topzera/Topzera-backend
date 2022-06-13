@@ -1,23 +1,29 @@
+import { User } from "@prisma/client";
 import { Request } from "express";
 import prismaClient from "../database/prismaClient";
+import { userToDTO } from "../types/user.type";
+import { SHA256 } from "crypto-js";
 
 export class UserService {
   async saveUser(request: Request) {
     const user = request.body;
-    return await prismaClient.user.create({
+    const encryptedPassword = SHA256(user.senha);
+    const savedUser = await prismaClient.user.create({
       data: {
         nome_completo: user.nomeCompleto,
         nacionalidade: user.nacionalidade,
         genero: user.genero,
         telefone: user.telefone,
         email: user.email,
-        senha: user.senha,
+        senha: encryptedPassword.toString(),
         local_img_user: user.imagemUsuario,
         local_img_car: user.imagemCarro,
         CNH_id_cnh: user.idCnh,
         id_endereco: user.idEndereco,
       },
     });
+
+    return userToDTO(savedUser);
   }
 
   async getUserById(idusuario: number) {
@@ -26,13 +32,8 @@ export class UserService {
         id_usuario: idusuario,
       },
     });
-    return user;
+
+    if (user) return userToDTO(user);
+    return;
   }
 }
-
-// nome completo
-// telefone
-// email
-// senha
-// id_cnh = 1
-// id_endereco = 1
