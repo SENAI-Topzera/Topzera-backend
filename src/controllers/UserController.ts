@@ -3,13 +3,21 @@ import { UserService } from "../service/UserService";
 const service = new UserService();
 
 export class UserController {
+  async login(request: Request, response: Response) {
+    const loginStatus = await service.login(request.body);
+    return response.send(loginStatus);
+  }
+
   async saveUser(request: Request, response: Response) {
-    return response.json(service.saveUser(request));
+    const dto = await service.saveUser(request);
+    return response.status(201).json(dto);
   }
 
   async getUserById(request: Request, response: Response) {
     const { id } = request.params;
     const idUsuario = Number.parseInt(id);
-    return response.json(await service.getUserById(idUsuario));
+    const user = await service.getUserById(idUsuario);
+    if (user) return response.json(user);
+    return response.end();
   }
 }
