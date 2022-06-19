@@ -22,27 +22,31 @@ model CNH {
 }
 
 model Car {
-  id_carro                   Int         @id @default(autoincrement())
-  marca                      String?     @db.VarChar(12)
-  modelo                     String?     @db.VarChar(20)
-  ano_modelo                 String?     @db.VarChar(8)
-  cor                        String?     @db.VarChar(10)
-  placa                      String?     @db.VarChar(8)
-  tp_comb                    String?     @db.VarChar(8)
-  tp_cambio                  String?     @db.VarChar(10)
-  qtd_portas                 String?     @db.VarChar(5)
-  qtd_lugares                String?     @db.VarChar(2)
-  qtd_bagagem                String?     @db.VarChar(4)
-  cod_renavam                String?     @db.VarChar(11)
-  dat_disponibilidade_inic   DateTime?   @db.DateTime(0)
-  dat_disponibilidade_fim    DateTime?   @db.DateTime(0)
+  id_carro                   Int                 @id @default(autoincrement())
+  marca                      String?             @db.VarChar(12)
+  modelo                     String?             @db.VarChar(20)
+  ano_modelo                 String?             @db.VarChar(8)
+  cor                        String?             @db.VarChar(10)
+  placa                      String?             @db.VarChar(8)
+  tp_comb                    String?             @db.VarChar(8)
+  tp_cambio                  String?             @db.VarChar(10)
+  qtd_portas                 String?             @db.VarChar(5)
+  qtd_lugares                String?             @db.VarChar(2)
+  qtd_bagagem                String?             @db.VarChar(4)
+  cod_renavam                String?             @db.VarChar(11)
+  dat_disponibilidade_inic   DateTime?           @db.DateTime(0)
+  dat_disponibilidade_fim    DateTime?           @db.DateTime(0)
   ind_status_disponibilidade Boolean?
   id_usuario                 Int?
-  latitude                   String?     @db.VarChar(500)
-  longitude                  String?     @db.VarChar(500)
-  usuario                    User?       @relation("carroTousuario", fields: [id_usuario], references: [id_usuario], onDelete: Restrict, onUpdate: Restrict, map: "fk_usuarios")
-  locacao                    Rental[]    @relation("carroTolocacao")
-  opcionais                  Optionals[] @relation("carroToopcionais")
+  id_opcionais               Int?
+  latitude                   String?             @db.VarChar(500)
+  longitude                  String?             @db.VarChar(500)
+  descricao                  String?             @db.VarChar(60)
+  usuario                    User?               @relation("carroTousuario", fields: [id_usuario], references: [id_usuario], onDelete: Restrict, onUpdate: Restrict, map: "fk_usuarios")
+  carro_imagens              carro_imagens[]     @relation("carroTocarro_imagens")
+  locacao                    Rental[]            @relation("carroTolocacao")
+  localizacao_carro          localizacao_carro[] @relation("carroTolocalizacao_carro")
+  opcionais                  Optionals[]         @relation("carroToopcionais")
 
   @@index([id_usuario], map: "fk_usuarios")
   @@map("carro")
@@ -110,10 +114,9 @@ model User {
   genero         String?   @db.VarChar(11)
   telefone       String    @db.VarChar(11)
   email          String    @unique(map: "email_unico") @db.VarChar(45)
-  senha          String?   @db.VarChar(255)
-  local_img_car  String?   @db.VarChar(200)
+  senha          String    @db.VarChar(255)
   local_img_user String?   @db.VarChar(200)
-  CPF            Int?      @unique(map: "CPF_unico")
+  CPF            String    @unique(map: "CPF_unico") @db.VarChar(11)
   CNH            CNH[]     @relation("CNHTousuario")
   carro          Car[]     @relation("carroTousuario")
   endereco       Address[] @relation("enderecoTousuario")
@@ -148,4 +151,23 @@ model User_Rating {
   @@index([id_locacao], map: "fk_Id_Locacao")
   @@index([id_usuario], map: "fk_usuariosLocacao")
   @@map("avalia_usuario")
+}
+
+model carro_imagens {
+  id_carro_imagens Int     @id @default(autoincrement())
+  path_img_carro   String? @db.VarChar(400)
+  id_carro         Int?
+  carro            Car?    @relation("carroTocarro_imagens", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "carro_id_fk")
+
+  @@index([id_carro], map: "carro_id_fk")
+}
+
+model localizacao_carro {
+  id_localizacao_carro Int     @id @default(autoincrement())
+  latitude             String? @db.VarChar(400)
+  longitude            String? @db.VarChar(400)
+  id_carro             Int?
+  carro                Car?    @relation("carroTolocalizacao_carro", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "fk_carro")
+
+  @@index([id_carro], map: "id_carro_fk")
 }

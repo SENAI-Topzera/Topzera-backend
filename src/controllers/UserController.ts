@@ -9,7 +9,8 @@ export class UserController {
   }
 
   async saveUser(request: Request, response: Response) {
-    const dto = await service.saveUser(request);
+    const { body } = request;
+    const dto = await service.saveUser(body);
     return response.status(201).json(dto);
   }
 

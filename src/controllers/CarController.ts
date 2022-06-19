@@ -9,7 +9,7 @@ const carService = new CarService();
 
 export class CarController {
   async findAll(request: Request, response: Response) {
-    return response.json(await prismaClient.car.findMany());
+    return response.json(await carService.findAll());
   }
 
   async getCarById(request: Request, response: Response) {

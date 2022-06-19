@@ -6,7 +6,19 @@ export interface UserDTO {
   nationality?: string | null;
   gender?: string | null;
   phone?: string;
-  email?: string;
+  email: string;
+  cpf: string;
+}
+
+export interface SaveUserDTO {
+  name: string;
+  nationality?: string | null;
+  gender?: string | null;
+  phone: string;
+  email: string;
+  password: string;
+  userImage?: string;
+  cpf: string;
 }
 
 export interface UserLogin {
@@ -28,5 +40,6 @@ export function userToDTO(user: User): UserDTO {
     gender: user.genero,
     phone: user.telefone,
     email: user.email,
+    cpf: user.CPF,
   };
 }

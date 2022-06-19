@@ -1,13 +1,17 @@
-import { Request } from "express";
 import prismaClient from "../database/prismaClient";
-import { ELoginStatus, UserLogin, userToDTO } from "../types/user.type";
+import {
+  ELoginStatus,
+  SaveUserDTO,
+  UserLogin,
+  userToDTO,
+} from "../types/user.type";
 import { SHA256 } from "crypto-js";
 
 export class UserService {
   async login(login: UserLogin) {
     const user = await this.getUserByEmail(login.email);
     if (user) {
-      return SHA256(login.password).toString() === user.senha!
+      return SHA256(login.password).toString() === user.senha
         ? ELoginStatus.LOGGED
         : ELoginStatus.INCORRECT_CREDENTIALS;
     }
@@ -15,9 +19,28 @@ export class UserService {
     return ELoginStatus.USER_NOT_FOUND;
   }
 
-  async saveUser(request: Request) {
-    const user = request.body;
-    const encryptedPassword = SHA256(user.password).toString();
+  async saveUser(user: SaveUserDTO) {
+    const existentUser = await this.getUserByEmail(user.email);
+    if (existentUser) {
+      const updatedUser = await prismaClient.user.update({
+        data: {
+          nome_completo: user.name,
+          nacionalidade: user.nationality,
+          genero: user.gender,
+          telefone: user.phone,
+          email: user.email,
+          senha: SHA256(user.password).toString(),
+          local_img_user: user.userImage,
+          CPF: user.cpf,
+        },
+        where: {
+          id_usuario: existentUser?.id_usuario,
+        },
+      });
+
+      return userToDTO(updatedUser);
+    }
+
     const savedUser = await prismaClient.user.create({
       data: {
         nome_completo: user.name,
@@ -25,11 +48,9 @@ export class UserService {
         genero: user.gender,
         telefone: user.phone,
         email: user.email,
-        senha: encryptedPassword,
+        senha: SHA256(user.password).toString(),
         local_img_user: user.userImage,
-        local_img_car: user.carImage,
-        CNH_id_cnh: user.cnhId,
-        id_endereco: user.addressId,
+        CPF: user.cpf,
       },
     });
 
@@ -48,10 +69,22 @@ export class UserService {
   }
 
   async getUserByEmail(email: string) {
-    return await prismaClient.user.findFirst({
+    return await prismaClient.user.findUnique({
       where: {
         email: email,
       },
     });
   }
+
+  async getUserByCpf(cpf: string) {
+    return await prismaClient.user.findUnique({
+      where: {
+        email: cpf,
+      },
+    });
+  }
+
+  // async getUserByEmailOrCpf(email: string, cpf: string): Promise<boolean> {
+  //   const byEmail = this.getUserByEmail(email);
+  // }
 }
