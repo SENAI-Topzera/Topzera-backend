@@ -5,7 +5,7 @@ import ImageService from "../service/ImageService";
 const imageService = new ImageService();
 const carService = new CarService();
 
-export class CarController {
+class CarController {
   async findAll(request: Request, response: Response) {
     return response.json(await carService.findAll());
   }
@@ -29,3 +29,5 @@ export class CarController {
     return response.send(responsee);
   }
 }
+
+export default CarController;

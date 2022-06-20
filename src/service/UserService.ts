@@ -11,7 +11,7 @@ import AddressService from "./AddressService";
 
 const addressService = new AddressService();
 
-export class UserService {
+class UserService {
   async login(login: UserLogin) {
     const user = await this.getUserByEmail(login.email);
     if (user) {
@@ -94,3 +94,5 @@ export class UserService {
     });
   }
 }
+
+export default UserService;
