@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { UserService } from "../service/UserService";
+import UserService from "../service/UserService";
 const service = new UserService();
 
-export class UserController {
+class UserController {
   async login(request: Request, response: Response) {
     const loginStatus = await service.login(request.body);
     return response.send(loginStatus);
@@ -22,3 +22,5 @@ export class UserController {
     return response.end();
   }
 }
+
+export default UserController;

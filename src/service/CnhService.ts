@@ -4,7 +4,11 @@ import { CnhDTO, cnhToDTO } from "../types/cnh.type";
 
 class CnhService {
   async findAll() {
-    return await prismaClient.cNH.findMany();
+    return await (
+      await prismaClient.cNH.findMany()
+    ).map((cnh) => {
+      cnhToDTO(cnh);
+    });
   }
 
   async saveCnh(dto: CnhDTO) {

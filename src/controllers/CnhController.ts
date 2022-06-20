@@ -3,7 +3,7 @@ import CnhService from "../service/CnhService";
 
 const cnhService = new CnhService();
 
-export class CnhController {
+class CnhController {
   async findAll(request: Request, response: Response) {
     response.json(await cnhService.findAll());
   }
@@ -19,3 +19,5 @@ export class CnhController {
     return response.json(await cnhService.getCnhById(idCnh));
   }
 }
+
+export default CnhController;
