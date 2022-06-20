@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import CarService from "../service/CarService";
-import prismaClient from "../database/prismaClient";
 import ImageService from "../service/ImageService";
-import multer from "multer";
 
 const imageService = new ImageService();
 const carService = new CarService();
