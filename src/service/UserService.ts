@@ -6,6 +6,10 @@ import {
   userToDTO,
 } from "../types/user.type";
 import { SHA256 } from "crypto-js";
+import { userDTOToAddressDto } from "../types/address.type";
+import AddressService from "./AddressService";
+
+const addressService = new AddressService();
 
 export class UserService {
   async login(login: UserLogin) {
@@ -54,7 +58,13 @@ export class UserService {
       },
     });
 
-    return userToDTO(savedUser);
+    const address = userDTOToAddressDto(user);
+    const userDTO = userToDTO(savedUser, address);
+
+    address.userId = userDTO.id;
+    addressService.saveAddress(address);
+
+    return userDTO;
   }
 
   async getUserById(idUsuario: number) {
