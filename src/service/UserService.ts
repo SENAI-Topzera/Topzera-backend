@@ -93,8 +93,4 @@ export class UserService {
       },
     });
   }
-
-  // async getUserByEmailOrCpf(email: string, cpf: string): Promise<boolean> {
-  //   const byEmail = this.getUserByEmail(email);
-  // }
 }

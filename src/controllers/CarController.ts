@@ -26,7 +26,6 @@ export class CarController {
     const key = request.body.Key;
     const responsee = await imageService.getObject(key);
     console.log(responsee);
-    // multer.
     return response.send(responsee);
   }
 }
