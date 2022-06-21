@@ -43,9 +43,9 @@ model Car {
   longitude                  String?             @db.VarChar(500)
   descricao                  String?             @db.VarChar(60)
   usuario                    User?               @relation("carroTousuario", fields: [id_usuario], references: [id_usuario], onDelete: Restrict, onUpdate: Restrict, map: "fk_usuarios")
-  carro_imagens              carro_imagens[]     @relation("carroTocarro_imagens")
+  carro_imagens              CarImages[]     @relation("carroTocarro_imagens")
   locacao                    Rental[]            @relation("carroTolocacao")
-  localizacao_carro          localizacao_carro[] @relation("carroTolocalizacao_carro")
+  localizacao_carro          CarLocation[] @relation("carroTolocalizacao_carro")
   opcionais                  Optionals[]         @relation("carroToopcionais")
 
   @@index([id_usuario], map: "fk_usuarios")
@@ -153,7 +153,7 @@ model User_Rating {
   @@map("avalia_usuario")
 }
 
-model localizacao_carro {
+model CarLocation {
   id_localizacao_carro Int     @id @default(autoincrement())
   latitude             String? @db.VarChar(400)
   longitude            String? @db.VarChar(400)
@@ -161,13 +161,15 @@ model localizacao_carro {
   carro                Car?    @relation("carroTolocalizacao_carro", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "fk_carro")
 
   @@index([id_carro], map: "id_carro_fk")
+  @@map("localizacao_carro")
 }
 
-model carro_imagens {
+model CarImages {
   id_carro_imagens Int     @id @default(autoincrement())
   path_img_carro   String? @db.VarChar(400)
   id_carro         Int?
   carro            Car?    @relation("carroTocarro_imagens", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "carro_id_fk")
 
   @@index([id_carro], map: "carro_id_fk")
+  @@map("carro_imagens")
 }
