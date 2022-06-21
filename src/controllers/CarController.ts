@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
-import CarService from "../service/CarService";
-import ImageService from "../service/ImageService";
+import CarService from "../services/CarService";
+import ImageService from "../services/ImageService";
 
 const imageService = new ImageService();
 const carService = new CarService();
 
-
-
 class CarController {
   async saveCar(request: Request, response: Response) {
-    return response.json(await carService.saveCar(request))
+    return response.json(await carService.saveCar(request));
   }
-  
+
   async findAll(request: Request, response: Response) {
     return response.json(await carService.findAll());
   }
@@ -34,8 +32,6 @@ class CarController {
     console.log(responsee);
     return response.send(responsee);
   }
-
-
 }
 
 export default CarController;
