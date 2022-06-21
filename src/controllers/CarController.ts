@@ -7,7 +7,7 @@ const carService = new CarService();
 
 class CarController {
   async saveCar(request: Request, response: Response) {
-    return response.json(await carService.saveCar(request));
+    return response.json(await carService.saveCar(request.body));
   }
 
   async findAll(request: Request, response: Response) {
@@ -17,7 +17,6 @@ class CarController {
   async getCarById(request: Request, response: Response) {
     const { id } = request.params;
     const idCarro: number = Number.parseInt(id);
-    console.log(id);
     return response.json(await carService.geCarById(idCarro));
   }
 
@@ -29,7 +28,6 @@ class CarController {
   async getCarImages(request: Request, response: Response) {
     const key = request.body.Key;
     const responsee = await imageService.getObject(key);
-    console.log(responsee);
     return response.send(responsee);
   }
 }

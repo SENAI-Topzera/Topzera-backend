@@ -3,7 +3,7 @@ import prismaClient from "../database/prismaClient";
 import { CnhDTO, cnhToDTO } from "../types/cnh.type";
 
 class CnhService {
-  async findAll() {
+  async findAll(): Promise<Array<void | CnhDTO>> {
     return await (
       await prismaClient.cNH.findMany()
     ).map((cnh) => {
@@ -11,7 +11,7 @@ class CnhService {
     });
   }
 
-  async saveCnh(dto: CnhDTO) {
+  async saveCnh(dto: CnhDTO): Promise<CnhDTO> {
     const cnh = await prismaClient.cNH.create({
       data: {
         data_nasc: moment(dto.bornDate).format(),
@@ -23,6 +23,7 @@ class CnhService {
         id_usuario: dto.userId,
       },
     });
+
     return cnhToDTO(cnh);
   }
 
@@ -38,12 +39,11 @@ class CnhService {
     const cnh = await prismaClient.cNH.delete({
       where: {
         id_cnh: idCnh,
-      }
+      },
     });
 
     return cnhToDTO(cnh);
   }
-
 }
 
 export default CnhService;
