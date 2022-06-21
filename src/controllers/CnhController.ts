@@ -18,6 +18,13 @@ class CnhController {
     const idCnh: number = Number.parseInt(id);
     return response.json(await cnhService.getCnhById(idCnh));
   }
+
+  async deleteCnhById(request: Request, response: Response) {
+    const { id } = request.params;
+    const idCnh: number = Number.parseInt(id);
+    const cnh = await cnhService.deleteCnhById(idCnh);
+    return response.sendStatus(204);
+  }
 }
 
 export default CnhController;

@@ -153,15 +153,6 @@ model User_Rating {
   @@map("avalia_usuario")
 }
 
-model carro_imagens {
-  id_carro_imagens Int     @id @default(autoincrement())
-  path_img_carro   String? @db.VarChar(400)
-  id_carro         Int?
-  carro            Car?    @relation("carroTocarro_imagens", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "carro_id_fk")
-
-  @@index([id_carro], map: "carro_id_fk")
-}
-
 model localizacao_carro {
   id_localizacao_carro Int     @id @default(autoincrement())
   latitude             String? @db.VarChar(400)
@@ -170,4 +161,13 @@ model localizacao_carro {
   carro                Car?    @relation("carroTolocalizacao_carro", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "fk_carro")
 
   @@index([id_carro], map: "id_carro_fk")
+}
+
+model carro_imagens {
+  id_carro_imagens Int     @id @default(autoincrement())
+  path_img_carro   String? @db.VarChar(400)
+  id_carro         Int?
+  carro            Car?    @relation("carroTocarro_imagens", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "carro_id_fk")
+
+  @@index([id_carro], map: "carro_id_fk")
 }

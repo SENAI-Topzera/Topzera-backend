@@ -33,6 +33,17 @@ class CnhService {
       },
     });
   }
+
+  async deleteCnhById(idCnh: number) {
+    const cnh = await prismaClient.cNH.delete({
+      where: {
+        id_cnh: idCnh,
+      }
+    });
+
+    return cnhToDTO(cnh);
+  }
+
 }
 
 export default CnhService;

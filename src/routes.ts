@@ -16,6 +16,7 @@ router.get("/api", statusController.handle);
 router.get("/api/cnh", cnhController.findAll);
 router.post("/api/cnh", cnhController.saveCnh);
 router.get("/api/cnh/:id", cnhController.getCnhById);
+router.delete("/api/cnh/:id", cnhController.deleteCnhById);
 router.get("/api/cars", carController.findAll);
 router.get("/api/cars/:id", carController.getCarById);
 router.post("/api/cars/images", carController.getCarImages); //trazer imagens especificadas
