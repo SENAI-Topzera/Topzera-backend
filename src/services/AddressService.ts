@@ -2,7 +2,7 @@ import prismaClient from "../database/prismaClient";
 import { AddressDTO, addressToDto } from "../types/address.type";
 
 class AddressService {
-  async saveAddress(dto: AddressDTO) {
+  async saveAddress(dto: AddressDTO): Promise<AddressDTO> {
     const savedAddress = await prismaClient.address.create({
       data: {
         cep: dto.postalCode,

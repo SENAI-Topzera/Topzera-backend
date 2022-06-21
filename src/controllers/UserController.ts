@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserService from "../service/UserService";
+import UserService from "../services/UserService";
 const service = new UserService();
 
 class UserController {

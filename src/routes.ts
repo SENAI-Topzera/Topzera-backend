@@ -1,6 +1,7 @@
 import { Router } from "express";
 import CarController from "./controllers/CarController";
 import CnhController from "./controllers/CnhController";
+import OptionalController from "./controllers/OptionalController";
 import RentalController from "./controllers/RentalController";
 import StatusController from "./controllers/StatusController";
 import UserController from "./controllers/UserController";
@@ -11,6 +12,7 @@ const statusController = new StatusController();
 const userController = new UserController();
 const cnhController = new CnhController();
 const rentalController = new RentalController();
+const optionalController = new OptionalController();
 
 router.get("/api", statusController.handle);
 router.get("/api/cnh", cnhController.findAll);
@@ -28,6 +30,7 @@ router.post("/api/rentals", rentalController.saveRental);
 router.get("/api/rentals", rentalController.findAll);
 router.get("/api/rentals/:id", rentalController.findById);
 router.get("/api/rentals/user/:userId", rentalController.findByUserId);
+router.post("/api/optionals", optionalController.saveOptional);
 // router.post(
 //   "/api/uploadImage",
 //   uploadImage.array("images", 10),
