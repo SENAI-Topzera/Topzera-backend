@@ -76,6 +76,7 @@ model Rental {
   data_devolucao                                    DateTime?     @db.DateTime(0)
   id_carro                                          Int?
   id_usuario                                        Int?
+  aceita                                            Boolean?
   carro                                             Car?          @relation("carroTolocacao", fields: [id_carro], references: [id_carro], onDelete: Restrict, onUpdate: Restrict, map: "fk_id_carros")
   usuario                                           User?         @relation("locacaoTousuario", fields: [id_usuario], references: [id_usuario], onDelete: Restrict, onUpdate: Restrict, map: "fk_usuarios_locacao")
   avalia_carro_avalia_carro_id_carroTolocacao       Car_Rating[]  @relation("avalia_carro_id_carroTolocacao")

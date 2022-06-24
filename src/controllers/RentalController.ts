@@ -23,6 +23,10 @@ class RentalController {
       await rentalService.findByUserId(Number.parseInt(userId))
     );
   }
+
+  async acceptRental(request: Request, response: Response) {
+    return response.json(await rentalService.acceptRental(request.body));
+  }
 }
 
 export default RentalController;

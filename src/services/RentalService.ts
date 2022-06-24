@@ -1,6 +1,6 @@
 import moment from "moment";
 import prismaClient from "../database/prismaClient";
-import { RentalDTO, rentalToDTO } from "../types/rental.type";
+import { AcceptRentalDTO, RentalDTO, rentalToDTO } from "../types/rental.type";
 
 class RentalService {
   async saveRental(rental: RentalDTO): Promise<RentalDTO> {
@@ -17,6 +17,19 @@ class RentalService {
     });
 
     return rentalToDTO(savedRental);
+  }
+
+  async acceptRental(accepted: AcceptRentalDTO): Promise<RentalDTO> {
+    const updatedRental = await prismaClient.rental.update({
+      data: {
+        aceita: accepted.accepted,
+      },
+      where: {
+        id_locacao: accepted.rentalId,
+      },
+    });
+
+    return rentalToDTO(updatedRental);
   }
 
   async findAll(): Promise<Array<RentalDTO>> {

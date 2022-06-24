@@ -10,6 +10,12 @@ export interface RentalDTO {
   returnDate?: string | null;
   carId?: number | null;
   userId?: number | null;
+  accepted?: boolean | null;
+}
+
+export interface AcceptRentalDTO {
+  rentalId: number;
+  accepted: boolean;
 }
 
 export function rentalToDTO(rental: Rental): RentalDTO {
@@ -22,6 +28,6 @@ export function rentalToDTO(rental: Rental): RentalDTO {
     returnDate: moment(rental.data_devolucao).format("YYYY-MM-DD HH:mm:ss"),
     carId: rental.id_carro,
     userId: rental.id_usuario,
-    //rental.data_retirada
+    accepted: rental.aceita,
   };
 }
