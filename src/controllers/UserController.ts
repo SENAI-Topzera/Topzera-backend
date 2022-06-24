@@ -21,6 +21,12 @@ class UserController {
     if (user) return response.json(user);
     return response.end();
   }
+
+  async getAccountInfo(resquest: Request, response: Response) {
+    const { id } = resquest.params;
+    const dto = await service.getAccountInfo(Number.parseInt(id));
+    return response.json(dto);
+  }
 }
 
 export default UserController;
