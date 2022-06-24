@@ -31,6 +31,8 @@ router.get("/api/rentals", rentalController.findAll);
 router.get("/api/rentals/:id", rentalController.findById);
 router.get("/api/rentals/user/:userId", rentalController.findByUserId);
 router.post("/api/optionals", optionalController.saveOptional);
+router.get("/api/optionals/:id", optionalController.getOptionalById);
+
 // router.post(
 //   "/api/uploadImage",
 //   uploadImage.array("images", 10),
