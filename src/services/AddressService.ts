@@ -16,6 +16,17 @@ class AddressService {
     });
     return addressToDto(savedAddress);
   }
+
+  async findAddressByUserId(userId: number): Promise<void | AddressDTO> {
+    const address = await prismaClient.address.findFirst({
+      where: {
+        id_usuario: userId,
+      },
+    });
+
+    if (address) return addressToDto(address);
+    return;
+  }
 }
 
 export default AddressService;

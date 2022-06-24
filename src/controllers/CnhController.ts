@@ -22,7 +22,7 @@ class CnhController {
   async deleteCnhById(request: Request, response: Response) {
     const { id } = request.params;
     const idCnh: number = Number.parseInt(id);
-    const cnh = await cnhService.deleteCnhById(idCnh);
+    await cnhService.deleteCnhById(idCnh);
     return response.sendStatus(204);
   }
 }
