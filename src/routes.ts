@@ -31,11 +31,7 @@ router.post("/api/rentals", rentalController.saveRental);
 router.get("/api/rentals", rentalController.findAll);
 router.get("/api/rentals/:id", rentalController.findById);
 router.get("/api/rentals/user/:userId", rentalController.findByUserId);
+router.put("/api/rentals/acceptRental", rentalController.acceptRental);
 router.post("/api/optionals", optionalController.saveOptional);
-// router.post(
-//   "/api/uploadImage",
-//   uploadImage.array("images", 10),
-//   carController.uploadImage
-// );
 
 export { router };
