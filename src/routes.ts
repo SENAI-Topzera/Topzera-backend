@@ -33,5 +33,6 @@ router.get("/api/rentals/:id", rentalController.findById);
 router.get("/api/rentals/user/:userId", rentalController.findByUserId);
 router.put("/api/rentals/accept-rental", rentalController.acceptRental);
 router.post("/api/optionals", optionalController.saveOptional);
+router.get("/api/optionals/:id", optionalController.getOptionalById);
 
 export { router };

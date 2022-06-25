@@ -21,6 +21,19 @@ class OptionalService {
 
     return optionalToDTO(savedOptional);
   }
+
+  async getOptionalById(idOpcionais: number) {
+    const optional = await prismaClient.optionals.findFirst({
+      where: {
+        id_opcionais: idOpcionais,
+      },
+    });
+
+    if (optional) return optionalToDTO(optional);
+    return;
+  }
+
+
 }
 
 export default OptionalService;
