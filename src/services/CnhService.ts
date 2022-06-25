@@ -44,6 +44,17 @@ class CnhService {
 
     return cnhToDTO(cnh);
   }
+
+  async findCnhByUserId(userId: number): Promise<void | CnhDTO> {
+    const cnh = await prismaClient.cNH.findFirst({
+      where: {
+        id_usuario: userId,
+      },
+    });
+
+    if (cnh) return cnhToDTO(cnh);
+    return;
+  }
 }
 
 export default CnhService;

@@ -1,5 +1,7 @@
 import prismaClient from "../database/prismaClient";
 import {
+  AccountInfoDTO,
+  createMyAccountDTO,
   ELoginStatus,
   SaveUserDTO,
   UserLogin,
@@ -8,8 +10,10 @@ import {
 import { SHA256 } from "crypto-js";
 import { userDTOToAddressDto } from "../types/address.type";
 import AddressService from "./AddressService";
+import CnhService from "./CnhService";
 
 const addressService = new AddressService();
+const cnhService = new CnhService();
 
 class UserService {
   async login(login: UserLogin) {
@@ -92,6 +96,20 @@ class UserService {
         email: cpf,
       },
     });
+  }
+
+  async getAccountInfo(userId: number): Promise<void | AccountInfoDTO> {
+    let address = null;
+    let cnh = null;
+    const user = await this.getUserById(userId);
+
+    if (user) {
+      address = await addressService.findAddressByUserId(userId);
+      cnh = await cnhService.findCnhByUserId(userId);
+      return createMyAccountDTO(user, address || null, cnh || null);
+    }
+
+    return;
   }
 }
 

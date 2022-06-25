@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import { AddressDTO } from "./address.type";
+import { CnhDTO } from "./cnh.type";
 
 export interface UserDTO {
   id: number;
@@ -34,6 +35,27 @@ export interface SaveUserDTO {
   state: string;
 }
 
+export interface AccountInfoDTO {
+  userId: number;
+  userName: string;
+  nationality?: string | null;
+  gender?: string | null;
+  phone?: string;
+  email: string;
+  postalCode?: string;
+  place?: string;
+  addressNumber?: string;
+  district?: string;
+  city?: string;
+  state?: string;
+  bornDateCnh?: string | null;
+  rg?: string | null;
+  registerNumberCnh?: string | null;
+  cnh?: string | null;
+  dueDateCnh?: string | null;
+  stateCnh?: string | null;
+}
+
 export interface UserLogin {
   email: string;
   password: string;
@@ -60,5 +82,32 @@ export function userToDTO(user: User, address?: AddressDTO): UserDTO {
     district: address?.district,
     city: address?.city,
     state: address?.state,
+  };
+}
+
+export function createMyAccountDTO(
+  user: UserDTO,
+  address?: AddressDTO | null,
+  cnh?: CnhDTO | null
+): AccountInfoDTO {
+  return {
+    userId: user.id,
+    userName: user.name,
+    nationality: user.nationality,
+    gender: user.gender,
+    phone: user.phone,
+    email: user.email,
+    postalCode: address?.postalCode,
+    place: address?.place,
+    addressNumber: address?.number,
+    district: address?.district,
+    city: address?.city,
+    state: address?.state,
+    bornDateCnh: cnh?.bornDate,
+    rg: cnh?.rg,
+    registerNumberCnh: cnh?.registerNumber,
+    cnh: cnh?.cnh,
+    dueDateCnh: cnh?.dueDate,
+    stateCnh: cnh?.state,
   };
 }

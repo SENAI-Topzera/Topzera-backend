@@ -25,18 +25,14 @@ router.post("/api/cars", carController.saveCar);
 router.post("/api/cars/images", carController.getCarImages); //trazer imagens especificadas
 router.post("/api/users", userController.saveUser);
 router.get("/api/users/:id", userController.getUserById);
+router.get("/api/account/:id", userController.getAccountInfo);
 router.post("/api/login", userController.login);
 router.post("/api/rentals", rentalController.saveRental);
 router.get("/api/rentals", rentalController.findAll);
 router.get("/api/rentals/:id", rentalController.findById);
 router.get("/api/rentals/user/:userId", rentalController.findByUserId);
+router.put("/api/rentals/accept-rental", rentalController.acceptRental);
 router.post("/api/optionals", optionalController.saveOptional);
 router.get("/api/optionals/:id", optionalController.getOptionalById);
-
-// router.post(
-//   "/api/uploadImage",
-//   uploadImage.array("images", 10),
-//   carController.uploadImage
-// );
 
 export { router };
