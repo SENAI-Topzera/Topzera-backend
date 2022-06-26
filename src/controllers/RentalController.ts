@@ -24,6 +24,13 @@ class RentalController {
     );
   }
 
+  async findByCarId(request: Request, response: Response) {
+    const { carId } = request.params;
+    return response.json(
+      await rentalService.findByCarId(Number.parseInt(carId))
+    );
+  }
+
   async acceptRental(request: Request, response: Response) {
     return response.json(await rentalService.acceptRental(request.body));
   }

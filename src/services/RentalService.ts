@@ -60,6 +60,17 @@ class RentalService {
     return;
   }
 
+  async findByCarId(carId: number): Promise<void | RentalDTO> {
+    const rental = await prismaClient.rental.findFirst({
+      where: {
+        id_carro: carId,
+      },
+    });
+
+    if (rental) return rentalToDTO(rental);
+    return;
+  }
+
   calculateRentalValue(rental: RentalDTO): number {
     const diff = moment(rental.returnDate, "YYYY-MM-DD HH:mm:ss").diff(
       moment(rental.pickupDate, "YYYY-MM-DD HH:mm:ss")
