@@ -10,6 +10,12 @@ class CarController {
     return response.json(await carService.saveCar(request.body));
   }
 
+  async editCar(request: Request, response: Response) {
+    const { id } = request.params;
+    const idCarro: number = Number.parseInt(id);
+    return response.json(await carService.editCar(request.body, idCarro));
+  }
+
   async findAll(request: Request, response: Response) {
     return response.json(await carService.findAll());
   }

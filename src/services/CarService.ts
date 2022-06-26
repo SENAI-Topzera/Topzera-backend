@@ -19,6 +19,36 @@ export default class CarService {
     return;
   }
 
+  async editCar(car: CarDTO, idCarro: number): Promise<void | CarDTO> {
+    const editedCar = await prismaClient.car.update({
+      where: {
+        id_carro: idCarro,
+      },
+      data: {
+        marca: car.brand,
+        modelo: car.model,
+        ano_modelo: car.modelYear,
+        cor: car.color,
+        placa: car.board,
+        tp_comb: car.typeFuel,
+        tp_cambio: car.typeGear,
+        qtd_portas: car.numberDoors,
+        qtd_lugares: car.numberAccents,
+        qtd_bagagem: car.numberBaggage,
+        cod_renavam: car.codeRenavam,
+        dat_disponibilidade_inic: moment(car.initialAvailability).format(),
+        dat_disponibilidade_fim: moment(car.finalAvailability).format(),
+        ind_status_disponibilidade: car.statusAvailability,
+        id_usuario: car.userId,
+        id_opcionais: car.optionalsId,
+        latitude: car.latitude,
+        longitude: car.longitude,
+        descricao: car.description,
+      },
+    });
+    return carToDTO(editedCar);
+  }
+
   async saveCar(car: CarDTO): Promise<CarDTO> {
     const savedCar = await prismaClient.car.create({
       data: {

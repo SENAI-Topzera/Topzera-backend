@@ -22,6 +22,7 @@ router.delete("/api/cnh/:id", cnhController.deleteCnhById);
 router.get("/api/cars", carController.findAll);
 router.get("/api/cars/:id", carController.getCarById);
 router.post("/api/cars", carController.saveCar);
+router.post("/api/cars/:id", carController.editCar);
 router.post("/api/cars/images", carController.getCarImages); //trazer imagens especificadas
 router.post("/api/users", userController.saveUser);
 router.get("/api/users/:id", userController.getUserById);
