@@ -33,8 +33,8 @@ class CarController {
 
   async getCarImages(request: Request, response: Response) {
     const key = request.body.Key;
-    const responsee = await imageService.getObject(key);
-    return response.send(responsee);
+    const data = await imageService.getObject(key);
+    return response.send(data);
   }
 }
 

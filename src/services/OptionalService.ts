@@ -32,8 +32,6 @@ class OptionalService {
     if (optional) return optionalToDTO(optional);
     return;
   }
-
-
 }
 
 export default OptionalService;
