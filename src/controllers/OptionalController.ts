@@ -13,11 +13,6 @@ class OptionalController {
     const idOpcionais: number = Number.parseInt(id);
     return response.json(await optionalService.getOptionalById(idOpcionais));
   }
-
 }
-
-
-
-
 
 export default OptionalController;

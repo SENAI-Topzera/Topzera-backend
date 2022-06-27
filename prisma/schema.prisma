@@ -42,6 +42,7 @@ model Car {
   latitude                   String?       @db.VarChar(500)
   longitude                  String?       @db.VarChar(500)
   descricao                  String?       @db.VarChar(60)
+  status                     String?       @db.VarChar(25)
   usuario                    User?         @relation("carroTousuario", fields: [id_usuario], references: [id_usuario], onDelete: Restrict, onUpdate: Restrict, map: "fk_usuarios")
   carro_imagens              CarImages[]   @relation("carroTocarro_imagens")
   locacao                    Rental[]      @relation("carroTolocacao")
