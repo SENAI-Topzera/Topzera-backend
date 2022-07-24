@@ -1,6 +1,6 @@
 import moment from "moment";
 import prismaClient from "../database/prismaClient";
-import { AcceptRentalDTO, RentalDTO, rentalToDTO } from "../types/rental.type";
+import { AcceptRentalDTO, RentalDTO, rentalToDTO } from "./rental.types";
 
 class RentalService {
   async saveRental(rental: RentalDTO): Promise<RentalDTO> {

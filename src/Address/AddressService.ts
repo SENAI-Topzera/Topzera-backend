@@ -1,5 +1,5 @@
 import prismaClient from "../database/prismaClient";
-import { AddressDTO, addressToDto } from "../types/address.type";
+import { AddressDTO, addressToDto } from "./address.types";
 
 class AddressService {
   async saveAddress(dto: AddressDTO): Promise<AddressDTO> {

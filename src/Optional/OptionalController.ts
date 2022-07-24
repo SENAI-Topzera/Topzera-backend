@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import OptionalService from "../services/OptionalService";
+import OptionalService from "./OptionalService";
 
 const optionalService = new OptionalService();
 
