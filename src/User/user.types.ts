@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
-import { AddressDTO } from "./address.type";
-import { CnhDTO } from "./cnh.type";
+import { AddressDTO } from "../Address/address.types";
+import { CnhDTO } from "../CNH/cnh.types";
 
 export interface UserDTO {
   id: number;

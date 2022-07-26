@@ -1,5 +1,5 @@
 import prismaClient from "../database/prismaClient";
-import { OptionalDTO, optionalToDTO } from "../types/optional.type";
+import { OptionalDTO, optionalToDTO } from "./optional.types";
 
 class OptionalService {
   async saveOptional(optional: OptionalDTO): Promise<OptionalDTO> {

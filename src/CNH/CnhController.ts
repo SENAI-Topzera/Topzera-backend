@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import CnhService from "../services/CnhService";
+import CnhService from "./CnhService";
 
 const cnhService = new CnhService();
 

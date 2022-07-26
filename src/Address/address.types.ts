@@ -1,5 +1,5 @@
 import { Address } from "@prisma/client";
-import { SaveUserDTO } from "./user.type";
+import { SaveUserDTO } from "../User/user.types";
 
 export interface AddressDTO {
   id?: number;

@@ -1,6 +1,6 @@
 import moment from "moment";
 import prismaClient from "../database/prismaClient";
-import { CarDTO, carToDTO } from "../types/car.type";
+import { CarDTO, carToDTO } from "./car.types";
 
 export default class CarService {
   async findAll(): Promise<Array<CarDTO>> {

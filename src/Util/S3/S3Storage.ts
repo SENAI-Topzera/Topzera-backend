@@ -5,7 +5,7 @@ import {
   ServiceOutputTypes,
 } from "@aws-sdk/client-s3";
 import path from "path";
-import multerConfig from "../config/multer";
+import multerConfig from "../../config/multer";
 import mime from "mime-types";
 import fs from "fs";
 import multer from "multer";

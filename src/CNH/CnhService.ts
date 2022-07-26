@@ -1,6 +1,6 @@
 import moment from "moment";
 import prismaClient from "../database/prismaClient";
-import { CnhDTO, cnhToDTO } from "../types/cnh.type";
+import { CnhDTO, cnhToDTO } from "./cnh.types";
 
 class CnhService {
   async findAll(): Promise<Array<void | CnhDTO>> {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import RentalService from "../services/RentalService";
+import RentalService from "./RentalService";
 
 const rentalService = new RentalService();
 

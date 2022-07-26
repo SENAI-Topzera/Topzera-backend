@@ -6,11 +6,11 @@ import {
   SaveUserDTO,
   UserLogin,
   userToDTO,
-} from "../types/user.type";
+} from "./user.types";
 import { SHA256 } from "crypto-js";
-import { userDTOToAddressDto } from "../types/address.type";
-import AddressService from "./AddressService";
-import CnhService from "./CnhService";
+import { userDTOToAddressDto } from "../Address/address.types";
+import AddressService from "../Address/AddressService";
+import CnhService from "../CNH/CnhService";
 
 const addressService = new AddressService();
 const cnhService = new CnhService();

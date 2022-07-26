@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import CarService from "../services/CarService";
-import ImageService from "../services/ImageService";
+import CarService from "./CarService";
+import ImageService from "../Util/S3/ImageService";
 
 const imageService = new ImageService();
 const carService = new CarService();

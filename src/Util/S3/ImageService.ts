@@ -1,4 +1,4 @@
-import { S3Storage } from "../utils/S3Storage";
+import { S3Storage } from "./S3Storage";
 
 class ImageService {
   private storage: S3Storage;
